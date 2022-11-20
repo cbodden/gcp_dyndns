@@ -33,7 +33,6 @@ trap 'echo "${NAME}: Ouch! Quitting." 1>&2 ; exit 1' 1 2 3 9 15
 
 function main()
 {
-    readonly GCLOUD_PATH="/home/cbodden/google-cloud-sdk/bin"
     readonly RED=$(tput setaf 1)
     readonly BLU=$(tput setaf 4)
     readonly GRN=$(tput setaf 40)
@@ -70,7 +69,7 @@ function _NEW_ADDR()
 function _CUR_ADDR()
 {
     readonly CUR_ADDR=$(\
-        ${GCLOUD_PATH}/gcloud  \
+        ${GCP_PATH}/gcloud  \
         dns \
         record-sets \
         list \
@@ -82,7 +81,7 @@ function _CHANGE_IP()
 {
     if [[ ${NEW_ADDR} != ${CUR_ADDR} ]]
     then
-        ${GCLOUD_PATH}/gcloud  \
+        ${GCP_PATH}/gcloud  \
             dns \
             record-sets \
             update \
@@ -96,19 +95,27 @@ function _CHANGE_IP()
 }
 
 ## option selection
-while getopts "d:D:t:T:r:R:z:Z:" OPT
+while getopts "d:D:g:G:t:T:r:R:z:Z:" OPT
 do
     case "${OPT}" in
         'd'|'D')
+            ## FQDN
             DOMAIN=${OPTARG}
             ;;
+        'g'|'G')
+            ## Path to gcloud command
+            GCP_PATH=${OPTARG}
+            ;;
         't'|'T')
+            ## TTL time. This defaults to 300.
             TTL=${OPTARG}
             ;;
         'r'|'R')
+            ## Record type. This defaults to A type.
             RECORD=${OPTARG}
             ;;
         'z'|'Z')
+            ## Google cloud dns zone name.
             ZONE=${OPTARG}
             ;;
         *)
@@ -125,9 +132,9 @@ fi
 shift $((OPTIND-1))
 
 main
-if [[ -z "${DOMAIN+x}" || -z "${ZONE+x}" ]]
+if [[ -z "${DOMAIN+x}" || -z "${GCP_PATH}" || -z "${ZONE+x}" ]]
 then
-    echo "both domain (-d,-D) and zone (-z,-Z) must be set"
+    echo "Either domain (-d,-D), GCP path (-g,-G), or zone (-z,-Z) are not set"
     exit 1
 fi
 _NEW_ADDR
