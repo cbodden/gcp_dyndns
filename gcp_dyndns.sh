@@ -50,8 +50,6 @@ function main()
             readonly ${ITER^^}="$(which ${ITER})"
         fi
     done
-
-    readonly NAME=$(basename $0)
 }
 
 function _NEW_ADDR()
