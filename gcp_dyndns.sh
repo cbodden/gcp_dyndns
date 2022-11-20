@@ -104,7 +104,7 @@ do
             ;;
         'g'|'G')
             ## Path to gcloud command
-            GCP_PATH=${OPTARG}
+            GCP_PATH=${OPTARG%/}
             ;;
         't'|'T')
             ## TTL time. This defaults to 300.
