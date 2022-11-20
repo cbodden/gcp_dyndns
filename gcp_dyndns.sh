@@ -2,18 +2,25 @@
 
 #===============================================================================
 #
-#          FILE: yamss.sh
-#         USAGE: ./yamss.sh
-#   DESCRIPTION: [Y]et [A]nother [M]atrix [S]hell [S]cript.
-#                This script shows a matrix like display in terminal.
-#       OPTIONS: -a, -c [num], -d, -h [num], -m [num], -q [let], -r, -s [num]
-#  REQUIREMENTS: bash, gnu awk, gnu bc
+#          FILE: gcp_dyndns.sh
+#         USAGE: ./gcp_dyndns.sh [options]
+#   DESCRIPTION: A script to enable automated updates to a record in
+#                Google Cloud DNS for usage similar to DYNDNS
+#       OPTIONS:
+#  REQUIREMENTS: dig and google cloud sdk fully authenticated
 #          BUGS: they will be discovered at random times
-#         NOTES: https://en.wikipedia.org/wiki/ANSI_escape_code
-#        AUTHOR: Cesar Bodden (), cesar@pissedoffadmins.com
-#  ORGANIZATION: pissedoffadmins.com
-#       CREATED: 09/29/2016 05:14:34 PM EDT
+#         NOTES:
+#        AUTHOR: Cesar B. (), cesar@poa.nyc
+#  ORGANIZATION: poa.nyc
+#       CREATED: 2022-11-20
 #      REVISION: 1
+#       LICENSE: Copyright (c) 2022, cesar@poa.nyc
+#                All rights reserved.
+#
+#                This source code is licensed under the BSD-style license
+#                found in the LICENSE file in the root directory of this
+#                source tree.
+#
 #===============================================================================
 
 LC_ALL=C
