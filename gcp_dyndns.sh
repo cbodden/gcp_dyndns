@@ -29,10 +29,10 @@ set -e
 set -o nounset
 set -o pipefail
 set -u
+readonly PROGNAME=$(basename $0)
+readonly PROGIDR=$(readlink -m $(dirname $0))
 trap 'echo "${NAME}: Ouch! Quitting." 1>&2 ; exit 1' 1 2 3 9 15
 
-    readonly PROGNAME=$(basename $0)
-    readonly PROGIDR=$(readlink -m $(dirname $0))
 function main()
 {
     readonly RED=$(tput setaf 1)
