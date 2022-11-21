@@ -54,7 +54,7 @@ OPTIONS
 Examples
      Update the A record for FQDN FOOBAR.BAZ with zone name EX-SET:
 
-            ${PROGNAME} -g ~/google-cloud-sdk/bin -d foobar.baz -z EX-SET
+            ./gcp_dyndns.sh -g ~/google-cloud-sdk/bin -d foobar.baz -z EX-SET
 
 Requirement
      This script requires that the Google Cloud SDK tools are installed and
