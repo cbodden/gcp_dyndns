@@ -188,7 +188,8 @@ shift $((OPTIND-1))
 main
 if [[ -z "${DOMAIN+x}" || -z "${GCP_PATH}" || -z "${ZONE+x}" ]]
 then
-    echo "Either domain (-d,-D), GCP path (-g,-G), or zone (-z,-Z) are not set"
+    _USAGE \
+        | less
     exit 1
 fi
 _NEW_ADDR
