@@ -11,6 +11,7 @@ Usage
 ----
 
 <pre><code>
+Name
     gcp_dyndns.sh
 
 SYNOPSIS
