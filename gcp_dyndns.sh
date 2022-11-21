@@ -74,12 +74,12 @@ function _CUR_ADDR()
         record-sets \
         list \
         --zone=${ZONE} \
-        | awk '/ A / {print $4}')
+        | awk '/'${DOMAIN}'/&&/ A / {print $4}')
 }
 
 function _CHANGE_IP()
 {
-    if [[ ${NEW_ADDR} != ${CUR_ADDR} ]]
+    if [[ $(echo ${NEW_ADDR}) != $(echo ${CUR_ADDR}) ]]
     then
         ${GCP_PATH:-$(which gcloud)}  \
             dns \
