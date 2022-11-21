@@ -13,7 +13,7 @@
 #        AUTHOR: Cesar B. (), cesar@poa.nyc
 #  ORGANIZATION: poa.nyc
 #       CREATED: 2022-11-20
-#      REVISION: 2
+#      REVISION: 3
 #       LICENSE: Copyright (c) 2022, cesar@poa.nyc
 #                All rights reserved.
 #
@@ -69,7 +69,7 @@ function _NEW_ADDR()
 function _CUR_ADDR()
 {
     readonly CUR_ADDR=$(\
-        ${GCP_PATH}/gcloud  \
+        ${GCP_PATH:-$(which gcloud)}  \
         dns \
         record-sets \
         list \
@@ -81,7 +81,7 @@ function _CHANGE_IP()
 {
     if [[ ${NEW_ADDR} != ${CUR_ADDR} ]]
     then
-        ${GCP_PATH}/gcloud  \
+        ${GCP_PATH:-$(which gcloud)}  \
             dns \
             record-sets \
             update \
@@ -119,8 +119,8 @@ OPTIONS
 
     -g [path to gcloud]
             The path to the gcloud command as installed by the
-            Google Cloud SDK installer.
-            Example: /home/user/google-cloud-sdk/bin/
+            Google Cloud SDK installer. If installed in path this will default
+            to that location.
 
     -t [TTL]
             The TTL in seconds that the resolver caches this resource
@@ -140,7 +140,8 @@ OPTIONS
                     /path/to/gcloud dns managed-zones list
 
 Examples
-     Update the A record for FQDN FOOBAR.BAZ with zone name EX-SET:
+     Update the A record for FQDN FOOBAR.BAZ with zone name EX-SET using the
+     installed gcloud command located at ~/google-cloud-sdk/bin :
 
             ${PROGNAME} -g ~/google-cloud-sdk/bin -d foobar.baz -z EX-SET
 
@@ -162,7 +163,7 @@ do
             ;;
         'g'|'G')
             ## Path to gcloud command
-            GCP_PATH=${OPTARG%/}
+            GCP_PATH="${OPTARG%/}/gcloud"
             ;;
         't'|'T')
             ## TTL time. This defaults to 300.
@@ -187,7 +188,7 @@ fi
 shift $((OPTIND-1))
 
 main
-if [[ -z "${DOMAIN+x}" || -z "${GCP_PATH}" || -z "${ZONE+x}" ]]
+if [[ -z "${DOMAIN+x}" || -z "${GCP_PATH:-$(which gcloud)}" || -z "${ZONE+x}" ]]
 then
     _USAGE \
         | less

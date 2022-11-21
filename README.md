@@ -34,8 +34,8 @@ OPTIONS
 
     -g [path to gcloud]
             The path to the gcloud command as installed by the
-            Google Cloud SDK installer.
-            Example: /home/user/google-cloud-sdk/bin/
+            Google Cloud SDK installer. If installed in path this will default
+            to that location.
 
     -t [TTL]
             The TTL in seconds that the resolver caches this resource
@@ -55,9 +55,10 @@ OPTIONS
                     /path/to/gcloud dns managed-zones list
 
 Examples
-     Update the A record for FQDN FOOBAR.BAZ with zone name EX-SET:
+     Update the A record for FQDN FOOBAR.BAZ with zone name EX-SET using the
+     installed gcloud command located at ~/google-cloud-sdk/bin :
 
-            ./gcp_dyndns.sh -g ~/google-cloud-sdk/bin -d foobar.baz -z EX-SET
+            ./gcp-dyndns.sh -g ~/google-cloud-sdk/bin -d foobar.baz -z EX-SET
 
 Requirement
      This script requires that the Google Cloud SDK tools are installed and
