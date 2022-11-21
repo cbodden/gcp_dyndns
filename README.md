@@ -20,8 +20,9 @@ SYNOPSIS
     gcp_dyndns.sh [OPTION]...
 
 DESCRIPTION
-    A script to enable automated updates to the A record
-    in Google Cloud DNS for usage similar to DYNDNS
+    A script that reads your current IP address as assigned by your isp to
+    enable automated updates to the A record in Google Cloud DNS for usage
+    similar to DYNDNS
 
 OPTIONS
     -d [FQDN]
