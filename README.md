@@ -30,12 +30,7 @@ OPTIONS
             DNS name as its suffix.
             This can be found in the second column by running :
 
-                    /path/to/gcloud dns managed-zones list
-
-    -g [path to gcloud]
-            The path to the gcloud command as installed by the
-            Google Cloud SDK installer. If installed in path this will default
-            to that location.
+                    gcloud dns managed-zones list
 
     -t [TTL]
             The TTL in seconds that the resolver caches this resource
@@ -52,18 +47,17 @@ OPTIONS
             must have the DNS name of the managed zone as its suffix.
             This can be found in the first column by running :
 
-                    /path/to/gcloud dns managed-zones list
+                    gcloud dns managed-zones list
 
 Examples
-     Update the A record for FQDN FOOBAR.BAZ with zone name EX-SET using the
-     installed gcloud command located at ~/google-cloud-sdk/bin :
+     Update the A record for FQDN FOOBAR.BAZ with zone name EX-SET :
 
-            ./gcp-dyndns.sh -g ~/google-cloud-sdk/bin -d foobar.baz -z EX-SET
+            ./gcp-dyndns.sh -d foobar.baz -z EX-SET
 
 Requirement
      This script requires that the Google Cloud SDK tools are installed and
-     configured and that the command gcloud is functioning against your
-     Google Cloud account with access to Google Coud DNS.
+     configured in your path and that the command gcloud is functioning
+     against your Google Cloud account with access to Google Coud DNS.
 
 
 </code></pre>
