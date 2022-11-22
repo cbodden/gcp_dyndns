@@ -69,12 +69,11 @@ function _NEW_ADDR()
 function _CUR_ADDR()
 {
     readonly CUR_ADDR=$(\
-        ${GCP_PATH:-$(which gcloud)}  \
-        dns \
-        record-sets \
-        list \
-        --zone=${ZONE} \
-        | awk '/'${DOMAIN}'/&&/ A / {print $4}')
+        ${DIG} \
+        -4 \
+        +short \
+        ${DOMAIN} \
+        | tr -d "\"")
 }
 
 function _CHANGE_IP()
