@@ -6,14 +6,17 @@
 #         USAGE: ./gcp_dyndns.sh [options]
 #   DESCRIPTION: A script to enable automated updates to a record in
 #                Google Cloud DNS for usage similar to DYNDNS
-#       OPTIONS:
+#       OPTIONS: -d [FQDN]
+#                -t [TTL]
+#                -r [RECORD TYPE]
+#                -z [ZONE NAME]
 #  REQUIREMENTS: dig and google cloud sdk fully authenticated
 #          BUGS: they will be discovered at random times
 #         NOTES:
 #        AUTHOR: Cesar B. (), cesar@poa.nyc
 #  ORGANIZATION: poa.nyc
 #       CREATED: 2022-11-20
-#      REVISION: 4
+#      REVISION: 5
 #       LICENSE: Copyright (c) 2022, cesar@poa.nyc
 #                All rights reserved.
 #
