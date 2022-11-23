@@ -11,7 +11,7 @@
 #                -t [TTL]
 #                -r [RECORD TYPE]
 #                -z [ZONE NAME]
-#  REQUIREMENTS: dig and google cloud sdk fully authenticated
+#  REQUIREMENTS: dig, and google cloud sdk fully authenticated
 #          BUGS: they will be discovered at random times
 #         NOTES:
 #        AUTHOR: Cesar B. (), cesar@poa.nyc
