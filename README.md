@@ -32,6 +32,10 @@ OPTIONS
 
                     gcloud dns managed-zones list
 
+    -q
+            Do not output messages. Set this flag if you want to run this
+            script in cron. This will not stop error messages.
+
     -t [TTL]
             The TTL in seconds that the resolver caches this resource
             record set.
@@ -65,7 +69,7 @@ Requirement
 Requirements
 ----
 
-- Google Cloud Command Line Interface (gcloud CLI) (https://cloud.google.com/cli)
+- Google Cloud Command Line Interface (gcloud CLI) (https://cloud.google.com/sdk/docs/install)
 
 
 License and Author

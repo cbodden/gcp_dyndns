@@ -38,7 +38,10 @@ trap 'echo "${NAME}: Ouch! Quitting." 1>&2 ; exit 1' 1 2 3 9 15
 
 function main()
 {
+    SILENT="0"
     readonly RED=$(tput setaf 1)
+    readonly BLU=$(tput setaf 4)
+    readonly GRN=$(tput setaf 40)
     readonly CLR=$(tput sgr0)
 
     local _DEPS="dig"
@@ -93,8 +96,15 @@ function _CUR_ADDR()
 
 function _CHANGE_IP()
 {
+
     if [[ $(echo ${NEW_ADDR}) != $(echo ${CUR_ADDR}) ]]
     then
+        if [[ ${SILENT} -eq 0 ]]
+        then
+        printf "%s\n" \
+            "${GRN}[X] Updating A record for ${DOMAIN} with ${NEW_ADDR}${CLR}"
+        fi
+
         ${GCP_PATH:-$(which gcloud)}  \
             dns \
             record-sets \
@@ -108,6 +118,12 @@ function _CHANGE_IP()
         if [[ $? -eq 1 ]]
         then
             exit 1
+        fi
+    else
+        if [[ ${SILENT} -eq 0 ]]
+        then
+        printf "%s\n" \
+            "${GRN}[X] Adresses are the same..${CLR}"
         fi
     fi
 }
@@ -134,6 +150,10 @@ OPTIONS
             This can be found in the second column by running :
 
                     gcloud dns managed-zones list
+
+    -q
+            Do not output messages. Set this flag if you want to run this
+            script in cron. This will not stop error messages.
 
     -t [TTL]
             The TTL in seconds that the resolver caches this resource
@@ -165,13 +185,19 @@ Requirement
     "
 }
 
+main
+
 ## option selection
-while getopts "d:t:r:z:" OPT
+while getopts "d:qt:r:z:" OPT
 do
     case "${OPT}" in
         'd')
             ## FQDN
             DOMAIN=${OPTARG}
+            ;;
+        'q')
+            ## This sets quiet mode
+            SILENT="1"
             ;;
         't')
             ## TTL time. This defaults to 300.
@@ -195,7 +221,6 @@ then
 fi
 shift $((OPTIND-1))
 
-main
 if [[ -z "${DOMAIN+x}" || -z "${ZONE+x}" ]]
 then
     _USAGE \
