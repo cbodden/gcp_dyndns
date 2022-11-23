@@ -92,7 +92,12 @@ function _CHANGE_IP()
             --ttl=${TTL:-300} \
             --type=${RECORD:-A} \
             --zone=${ZONE} \
-            &> /dev/null
+            2> >(sed $'s,.*,\e[31m&\e[m,'>&2) 1> /dev/null
+        if [[ $? -eq 1 ]]
+        then
+            exit 1
+            break
+        fi
     fi
 }
 
@@ -150,26 +155,22 @@ Requirement
 }
 
 ## option selection
-while getopts "d:g:t:r:z:" OPT
+while getopts "d:t:r:z:" OPT
 do
     case "${OPT}" in
-        'd'|'D')
+        'd')
             ## FQDN
             DOMAIN=${OPTARG}
             ;;
-        'g'|'G')
-            ## Path to gcloud command
-            GCP_PATH="${OPTARG%/}/gcloud"
-            ;;
-        't'|'T')
+        't')
             ## TTL time. This defaults to 300.
             TTL=${OPTARG}
             ;;
-        'r'|'R')
+        'r')
             ## Record type. This defaults to A type.
             RECORD=${OPTARG}
             ;;
-        'z'|'Z')
+        'z')
             ## Google cloud dns zone name.
             ZONE=${OPTARG}
             ;;
@@ -184,7 +185,7 @@ fi
 shift $((OPTIND-1))
 
 main
-if [[ -z "${DOMAIN+x}" || -z "${GCP_PATH:-$(which gcloud)}" || -z "${ZONE+x}" ]]
+if [[ -z "${DOMAIN+x}" || -z "${ZONE+x}" ]]
 then
     _USAGE \
         | less
