@@ -34,7 +34,8 @@ OPTIONS
 
     -q
             Do not output messages. Set this flag if you want to run this
-            script in cron. This will not stop error messages.
+            script in cron. This will not stop error messages. By default
+            this is not enabled.
 
     -t [TTL]
             The TTL in seconds that the resolver caches this resource

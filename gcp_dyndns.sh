@@ -7,6 +7,7 @@
 #   DESCRIPTION: A script to enable automated updates to a record in
 #                Google Cloud DNS for usage similar to DYNDNS
 #       OPTIONS: -d [FQDN]
+#                -q
 #                -t [TTL]
 #                -r [RECORD TYPE]
 #                -z [ZONE NAME]
@@ -50,7 +51,7 @@ function main()
         if [ -z "$(which ${ITER} 2>/dev/null)" ]
         then
             printf "%s\n" \
-                "${RED}. . .${ITER} not found. . .${CLR}"
+                "${RED}[X] ${ITER} not found.${CLR}"
             exit 1
         else
             readonly ${ITER^^}="$(which ${ITER})"
@@ -153,7 +154,8 @@ OPTIONS
 
     -q
             Do not output messages. Set this flag if you want to run this
-            script in cron. This will not stop error messages.
+            script in cron. This will not stop error messages. By default
+            this is not enabled.
 
     -t [TTL]
             The TTL in seconds that the resolver caches this resource
