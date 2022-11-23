@@ -16,7 +16,7 @@
 #        AUTHOR: Cesar B. (), cesar@poa.nyc
 #  ORGANIZATION: poa.nyc
 #       CREATED: 2022-11-20
-#      REVISION: 5
+#      REVISION: 6
 #       LICENSE: Copyright (c) 2022, cesar@poa.nyc
 #                All rights reserved.
 #
@@ -39,8 +39,6 @@ trap 'echo "${NAME}: Ouch! Quitting." 1>&2 ; exit 1' 1 2 3 9 15
 function main()
 {
     readonly RED=$(tput setaf 1)
-    readonly BLU=$(tput setaf 4)
-    readonly GRN=$(tput setaf 40)
     readonly CLR=$(tput sgr0)
 
     local _DEPS="dig"
@@ -67,6 +65,13 @@ function _NEW_ADDR()
         o-o.myaddr.l.google.com \
         @ns1.google.com \
         | tr -d "\"")
+
+    if [[ -z "${NEW_ADDR}" ]]
+    then
+        printf "%s\n" \
+            "${RED}[X] Can not get your ISP provided IP address.${CLR}"
+        exit 1
+    fi
 }
 
 function _CUR_ADDR()
@@ -77,6 +82,13 @@ function _CUR_ADDR()
         +short \
         ${DOMAIN} \
         | tr -d "\"")
+
+    if [[ -z "${CUR_ADDR}" ]]
+    then
+        printf "%s\n" \
+            "${RED}[X] Existing address is missing. Check your FQDN.${CLR}"
+        exit 1
+    fi
 }
 
 function _CHANGE_IP()
@@ -96,7 +108,6 @@ function _CHANGE_IP()
         if [[ $? -eq 1 ]]
         then
             exit 1
-            break
         fi
     fi
 }
